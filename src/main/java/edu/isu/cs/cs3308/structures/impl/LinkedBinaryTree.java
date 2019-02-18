@@ -2,11 +2,13 @@
 
 package edu.isu.cs.cs3308.structures.impl;
 
-import edu.isu.cs.cs3308.structures.BinaryTree;
 import edu.isu.cs.cs3308.structures.Node;
-import edu.isu.cs.cs3308.structures.Tree;
 
-public class LinkedBinaryTree<E> implements BinaryTree<E>, Tree<E> {
+public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
+
+    public Node<E> root = null;
+    public int size = 0;
+
     /**
      * Returns the left child of the provided node.
      *
@@ -85,7 +87,7 @@ public class LinkedBinaryTree<E> implements BinaryTree<E>, Tree<E> {
      */
     @Override
     public Node<E> root() {
-        return null;
+        return root;
     }
 
     /**
@@ -187,7 +189,7 @@ public class LinkedBinaryTree<E> implements BinaryTree<E>, Tree<E> {
      *
      * @param item Item to be inserted into the tree.
      * @param p    The parent node of the tree, if null the item becomes the new
-     *             root so beaware.
+     *             root so be aware.
      * @return True if the item was able to be inserted, false otherwise (for
      * example the item was null)
      * @throws IllegalArgumentException if the provided parent node is invalid,
@@ -218,7 +220,7 @@ public class LinkedBinaryTree<E> implements BinaryTree<E>, Tree<E> {
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -227,7 +229,7 @@ public class LinkedBinaryTree<E> implements BinaryTree<E>, Tree<E> {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     /**
@@ -274,7 +276,7 @@ public class LinkedBinaryTree<E> implements BinaryTree<E>, Tree<E> {
     }
 
     /**
-     * Recusively calculates the size of a subtree rooted at the provided node.
+     * Recursively calculates the size of a subtree rooted at the provided node.
      *
      * @param node Node whose subtree size is to be calculated
      * @return Size of the subtree (excluding the root)
@@ -297,5 +299,54 @@ public class LinkedBinaryTree<E> implements BinaryTree<E>, Tree<E> {
     @Override
     public boolean isLastChild(Node<E> node) throws IllegalArgumentException {
         return false;
+    }
+
+    public BinaryTreeNode<E> createNode(E element, Node<E> parent, Node<E> left, Node<E> right) {
+        return null;
+    }
+
+
+    public class BinaryTreeNode<T> implements Node<T> {
+        T element = null;
+        Node<T> parent = null;
+        Node<T> left = null;
+        Node<T> right = null;
+
+
+
+        /**
+         * @return The element contained in this node.
+         */
+        @Override
+        public T getElement() {
+            return null;
+        }
+
+        /**
+         * Sets the new value of this node to the provided one. Thows an
+         * IllegalArgumentException if the provided value is null.
+         *
+         * @param element New value to be contained in this node.
+         */
+        @Override
+        public void setElement(T element) throws IllegalArgumentException {
+
+        }
+
+        /**
+         * @return The parent node of this class. Can be null.
+         */
+        @Override
+        public Node<T> getParent() {
+            return null;
+        }
+
+        public Node<T> getLeft() {
+            return null;
+        }
+
+        public Node<T> getRight() {
+            return null;
+        }
     }
 }

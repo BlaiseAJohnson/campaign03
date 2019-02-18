@@ -47,8 +47,8 @@ public class LinkedBinaryTreeTest {
 
     @Test
     public void testCreateNode_2() {
-        BinaryTreeNode<Integer> root = fixture.createNode(0, null, null, null);
-        BinaryTreeNode<Integer> node = fixture.createNode(0, root, null, null);
+        BinaryTreeNode root = fixture.createNode(0, null, null, null);
+        BinaryTreeNode node = fixture.createNode(0, root, null, null);
         assertNotNull(node);
 
         assertNull(root.getLeft());
