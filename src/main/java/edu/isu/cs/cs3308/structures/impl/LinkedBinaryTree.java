@@ -2,7 +2,11 @@
 
 package edu.isu.cs.cs3308.structures.impl;
 
+import edu.isu.cs.cs3308.structures.BinaryTree;
 import edu.isu.cs.cs3308.structures.Node;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
 
@@ -19,7 +23,8 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public Node<E> left(Node<E> p) throws IllegalArgumentException {
-        return null;
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+        return node.left;
     }
 
     /**
@@ -32,7 +37,8 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public Node<E> right(Node<E> p) throws IllegalArgumentException {
-        return null;
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+        return node.right;
     }
 
     /**
@@ -47,7 +53,13 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public Node<E> sibling(Node<E> p) throws IllegalArgumentException {
-        return null;
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+        BinaryTreeNode<E> parent = (BinaryTreeNode<E>) node.parent;
+
+        if (parent.left == node) {
+            return parent.right;
+        }
+        else return parent.left;
     }
 
     /**
@@ -63,7 +75,11 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public Node<E> addLeft(Node<E> p, E element) throws IllegalArgumentException {
-        return null;
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
+        BinaryTreeNode<E> newNode = createNode(element, p, null, null);
+        node.left = newNode;
+
+        return newNode;
     }
 
     /**
@@ -79,7 +95,11 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public Node<E> addRight(Node<E> p, E element) throws IllegalArgumentException {
-        return null;
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
+        BinaryTreeNode<E> newNode = createNode(element, p, null, null);
+        node.right = newNode;
+
+        return newNode;
     }
 
     /**
@@ -101,7 +121,12 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public Node<E> setRoot(E item) {
-        return null;
+        if (root.getElement().equals(item)) return root;
+
+        BinaryTreeNode<E> newRoot = createNode(item, null, null, null);
+        root = newRoot;
+
+        return newRoot;
     }
 
     /**
@@ -115,7 +140,8 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public Node<E> parent(Node<E> p) throws IllegalArgumentException {
-        return null;
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+        return node.parent;
     }
 
     /**
@@ -129,7 +155,13 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public Iterable<Node<E>> children(Node<E> p) throws IllegalArgumentException {
-        return null;
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+        LinkedList<Node<E>> children = new LinkedList<>();
+
+        children.addLast(node.left);
+        children.addLast(node.right);
+
+        return children;
     }
 
     /**
@@ -141,7 +173,13 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public int numChildren(Node<E> p) throws IllegalArgumentException {
-        return 0;
+        int numChildren = 0;
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+
+        if (node.getLeft() != null) numChildren += 1;
+        if (node.getRight() != null) numChildren += 1;
+
+        return numChildren;
     }
 
     /**
@@ -154,7 +192,9 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public boolean isInternal(Node<E> p) throws IllegalArgumentException {
-        return false;
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+
+        return numChildren(node) != 0;
     }
 
     /**
@@ -167,7 +207,9 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public boolean isExternal(Node<E> p) throws IllegalArgumentException {
-        return false;
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+
+        return numChildren(node) == 0;
     }
 
     /**
@@ -180,7 +222,8 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public boolean isRoot(Node<E> p) throws IllegalArgumentException {
-        return false;
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+        return node.equals(root);
     }
 
     /**
