@@ -372,13 +372,13 @@ public class LinkedBinaryTreeTest {
     public void testRemove() {
         Node<Integer> root = fixture.setRoot(4);
         Node<Integer> left = fixture.insert(2, root);
-        Node<Integer> two = fixture.insert(6, root);
+        Node<Integer> right = fixture.insert(6, root);
 
         fixture.insert(1, left);
         fixture.insert(3, left);
 
-        fixture.insert(5, two);
-        fixture.insert(7, two);
+        fixture.insert(5, right);
+        fixture.insert(7, right);
         assertTrue("Returned false on removal of external node", fixture.remove(1, left));
     }
 

@@ -1,3 +1,5 @@
+//TODO: Remove comments from BreadthFirstTraversalTest.
+
 package edu.isu.cs.cs3308.traversals;
 
 import edu.isu.cs.cs3308.structures.Node;
@@ -45,7 +47,7 @@ public class BreadthFirstTraversalTest {
         tree.insert(6, two);
         tree.insert(7, two);
 
-        fixture = new BreadthFirstTraversal<>(tree);
+        //fixture = new BreadthFirstTraversal<>(tree);
     }
 
     @After
@@ -69,14 +71,14 @@ public class BreadthFirstTraversalTest {
     @Test
     public void testTraverse_2() {
         tree = new LinkedBinaryTree<>();
-        fixture = new BreadthFirstTraversal(tree);
+        //fixture = new BreadthFirstTraversal(tree);
         Iterable<Node<Integer>> trav = fixture.traverse();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testTraverse_3() {
         tree = null;
-        fixture = new BreadthFirstTraversal(tree);
+        //fixture = new BreadthFirstTraversal(tree);
     }
 
     /**
@@ -104,3 +106,4 @@ public class BreadthFirstTraversalTest {
         fixture.traverseFrom(left);
     }
 }
+

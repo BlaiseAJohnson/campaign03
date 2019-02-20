@@ -1,8 +1,8 @@
 package edu.isu.cs.cs3308.traversals.commands;
 
+import edu.isu.cs.cs3308.structures.BinaryTree;
 import edu.isu.cs.cs3308.structures.Node;
 import edu.isu.cs.cs3308.structures.Tree;
-import edu.isu.cs.cs3308.structures.impl.AbstractBinaryTree;
 import java.io.PrintWriter;
 import edu.isu.cs.cs3308.Datum;
 
@@ -42,7 +42,7 @@ public class EnumeratedSaveCommand extends TraversalCommand<Datum> {
         int parentNum = node.getParent() == null ? -1 : node.getParent().getElement().getNumber();
         String side = "r";
         if (node.getParent() != null)
-            side = node.equals(((AbstractBinaryTree) tree).left(node.getParent())) ? "l" : "r";
+            side = node.equals(((BinaryTree<Datum>) tree).left(node.getParent())) ? "l" : "r";
         writer.printf("%d:%d:%s:%s%n", parentNum, data.getNumber(), side, data.getPrompt());
     }
 

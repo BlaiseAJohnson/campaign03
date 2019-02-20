@@ -209,7 +209,7 @@ public abstract class BinarySearchTree<E> implements BinaryTree<E>, Tree<E> {
      *                                  element value is null.
      */
     @Override
-    public abstract E set(Node<E> node, E element) throws IllegalArgumentException;
+    public abstract void set(Node<E> node, E element) throws IllegalArgumentException;
 
     /**
      * Validates that the provided node is not null, is of a subtype of Node

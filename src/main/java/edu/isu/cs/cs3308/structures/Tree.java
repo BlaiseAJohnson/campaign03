@@ -132,7 +132,7 @@ public interface Tree<E> {
      * @throws IllegalArgumentException If the provided node is invalid, or the
      * element value is null.
      */
-    E set(Node<E> node, E element) throws IllegalArgumentException;
+    void set(Node<E> node, E element) throws IllegalArgumentException;
 
     /**
      * Validates that the provided node is not null, is of a subtype of Node

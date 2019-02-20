@@ -2,11 +2,8 @@
 
 package edu.isu.cs.cs3308.structures.impl;
 
-import edu.isu.cs.cs3308.structures.BinaryTree;
 import edu.isu.cs.cs3308.structures.Node;
-
 import java.util.LinkedList;
-import java.util.List;
 
 public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
 
@@ -23,7 +20,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public Node<E> left(Node<E> p) throws IllegalArgumentException {
-        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
         return node.left;
     }
 
@@ -37,7 +34,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public Node<E> right(Node<E> p) throws IllegalArgumentException {
-        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
         return node.right;
     }
 
@@ -53,7 +50,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public Node<E> sibling(Node<E> p) throws IllegalArgumentException {
-        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
         BinaryTreeNode<E> parent = (BinaryTreeNode<E>) node.parent;
 
         if (parent.left == node) {
@@ -77,7 +74,10 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
     public Node<E> addLeft(Node<E> p, E element) throws IllegalArgumentException {
         BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
         BinaryTreeNode<E> newNode = createNode(element, p, null, null);
+
+        if (node.left != null) throw new IllegalArgumentException("This node already has a left child!");
         node.left = newNode;
+        size++;
 
         return newNode;
     }
@@ -97,7 +97,10 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
     public Node<E> addRight(Node<E> p, E element) throws IllegalArgumentException {
         BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
         BinaryTreeNode<E> newNode = createNode(element, p, null, null);
+
+        if (node.right != null) throw new IllegalArgumentException("This node already has a right child!");
         node.right = newNode;
+        size++;
 
         return newNode;
     }
@@ -121,10 +124,20 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public Node<E> setRoot(E item) {
-        if (root.getElement().equals(item)) return root;
+        if (item == null) {
+            size = 0;
+            return null;
+        }
+
+        if (root != null) {
+            E currentElement = root.getElement();
+
+            if (currentElement.equals(item)) return root;
+        }
 
         BinaryTreeNode<E> newRoot = createNode(item, null, null, null);
         root = newRoot;
+        size = 1;
 
         return newRoot;
     }
@@ -140,7 +153,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public Node<E> parent(Node<E> p) throws IllegalArgumentException {
-        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
         return node.parent;
     }
 
@@ -155,7 +168,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public Iterable<Node<E>> children(Node<E> p) throws IllegalArgumentException {
-        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
         LinkedList<Node<E>> children = new LinkedList<>();
 
         children.addLast(node.left);
@@ -174,7 +187,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
     @Override
     public int numChildren(Node<E> p) throws IllegalArgumentException {
         int numChildren = 0;
-        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
 
         if (node.getLeft() != null) numChildren += 1;
         if (node.getRight() != null) numChildren += 1;
@@ -192,7 +205,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public boolean isInternal(Node<E> p) throws IllegalArgumentException {
-        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
 
         return numChildren(node) != 0;
     }
@@ -207,7 +220,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public boolean isExternal(Node<E> p) throws IllegalArgumentException {
-        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
 
         return numChildren(node) == 0;
     }
@@ -222,7 +235,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public boolean isRoot(Node<E> p) throws IllegalArgumentException {
-        BinaryTreeNode<E> node = (BinaryTreeNode<E>)validate(p);
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
         return node.equals(root);
     }
 
@@ -232,15 +245,24 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      *
      * @param item Item to be inserted into the tree.
      * @param p    The parent node of the tree, if null the item becomes the new
-     *             root so be aware.
-     * @return True if the item was able to be inserted, false otherwise (for
-     * example the item was null)
+     *             root so beware.
+     * @return The newly created node, if it was able to be inserted, null otherwise.
      * @throws IllegalArgumentException if the provided parent node is invalid,
      *                                  or the provided value is null.
      */
     @Override
-    public Node<E> insert(E item, Node<E> p) {
-        return null;
+    public Node<E> insert(E item, Node<E> p) throws IllegalArgumentException {
+        if (item == null) throw new IllegalArgumentException("The item being inserted cannot be null!");
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
+
+        if (node.getLeft() == null) {
+            return addLeft(node, item);
+        }
+        else if (node.getRight() == null) {
+            return addRight(node, item);
+        } else {
+            throw new IllegalArgumentException("The provided node is full!");
+        }
     }
 
     /**
@@ -249,12 +271,39 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      * @param item Item to be removed from the list of children of the provided
      *             node.
      * @param p    Parent node.
-     * @return true if the item was removed, false otherwise.
+     * @return True if the item was removed, false otherwise.
      * @throws IllegalArgumentException If the provided parent node is not valid
      *                                  or the value is null.
      */
     @Override
     public boolean remove(E item, Node<E> p) throws IllegalArgumentException {
+        if (item == null || p == null) return false;
+        BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
+
+        if (node.getLeft() != null) {
+            E leftItem = node.getLeft().getElement();
+
+            if (leftItem.equals(item)) {
+                BinaryTreeNode<E> removeNode = (BinaryTreeNode<E>) node.getLeft();
+                removeNode.setParent(removeNode);
+                node.setLeft(null);
+                size--;
+                return true;
+            }
+        }
+
+        if (node.getRight() != null) {
+            E rightItem = node.getRight().getElement();
+
+            if (rightItem.equals(item)) {
+                BinaryTreeNode<E> removeNode = (BinaryTreeNode<E>) node.getRight();
+                removeNode.setParent(removeNode);
+                node.setRight(null);
+                size--;
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -286,8 +335,11 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      *                                  element value is null.
      */
     @Override
-    public E set(Node<E> node, E element) throws IllegalArgumentException {
-        return null;
+    public void set(Node<E> node, E element) throws IllegalArgumentException {
+        if (element == null) throw new IllegalArgumentException();
+        node = validate(node);
+
+        node.setElement(element);
     }
 
     /**
@@ -303,7 +355,8 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public Node<E> validate(Node<E> p) throws IllegalArgumentException {
-        return null;
+        if (!(p instanceof BinaryTreeNode) || !isInTree(p)) throw new IllegalArgumentException("The provided node is not valid!");
+        return p;
     }
 
     /**
@@ -315,7 +368,13 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public int depth(Node<E> node) throws IllegalArgumentException {
-        return 0;
+        int depth = 0;
+
+        while (node.getParent() != null) {
+            node = node.getParent();
+            depth++;
+        }
+        return 1 + depth;
     }
 
     /**
@@ -327,7 +386,16 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public int subTreeSize(Node<E> node) throws IllegalArgumentException {
-        return 0;
+        BinaryTreeNode<E> vNode = (BinaryTreeNode<E>) validate(node);
+        BinaryTreeNode<E> left = (BinaryTreeNode<E>) vNode.getLeft();
+        BinaryTreeNode<E> right = (BinaryTreeNode<E>) vNode.getRight();
+        int leftSize = 0;
+        int rightSize = 0;
+
+        if (left != null) leftSize = subTreeSize(left);
+        if (right != null) rightSize = subTreeSize(right);
+
+        return 1 + leftSize + rightSize;
     }
 
     /**
@@ -341,28 +409,73 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     @Override
     public boolean isLastChild(Node<E> node) throws IllegalArgumentException {
-        return false;
+        BinaryTreeNode<E> vNode = (BinaryTreeNode<E>) validate(node);
+        return (sibling(vNode) == null && children(vNode) == null) || isRoot(vNode);
     }
 
-    public BinaryTreeNode<E> createNode(E element, Node<E> parent, Node<E> left, Node<E> right) {
-        return null;
+    /**
+     * Creates a new node with the specified element, parent, left child, and right child.
+     * Element  cannot take null values.
+     *
+     * @param element The data to be held in the node.
+     * @param parent The parent of the newly created node.
+     * @param left The left child of the newly created node.
+     * @param right The right child of the newly created node.
+     * @return The newly created node unless element was null.
+     */
+    BinaryTreeNode<E> createNode(E element, Node<E> parent, Node<E> left, Node<E> right) throws IllegalArgumentException {
+        if (element == null) throw new IllegalArgumentException("Element cannot take null values.");
+        return new BinaryTreeNode<>(element, parent, left, right);
+    }
+
+    /**
+     * Checks if the provide node is in the tree on which this method is called.
+     *
+     * @param node The node to check the presence of.
+     * @return True if the node is in the tree, or false if the node is not in the tree.
+     */
+    private boolean isInTree(Node<E> node) {
+        while (node.getParent() != null) {
+            node = node.getParent();
+        }
+
+        return node.equals(root);
     }
 
 
-    public class BinaryTreeNode<T> implements Node<T> {
-        T element = null;
-        Node<T> parent = null;
-        Node<T> left = null;
-        Node<T> right = null;
 
 
+    //======================//
+    // BinaryTreeNode class //
+    //======================//
+
+
+    /**
+     * Represents the structure and connections of the nodes used in a linked
+     * binary tree.
+     *
+     * @param <T> The data type of the data to be stored in the node.
+     */
+    public static class BinaryTreeNode<T> implements Node<T> {
+        private T element;
+        private Node<T> parent;
+        private Node<T> left;
+        private Node<T> right;
+
+
+        public BinaryTreeNode(T element, Node<T> parent, Node<T> left, Node<T> right) {
+            this.element = element;
+            this.parent = parent;
+            this.left = left;
+            this.right = right;
+        }
 
         /**
          * @return The element contained in this node.
          */
         @Override
         public T getElement() {
-            return null;
+            return element;
         }
 
         /**
@@ -373,23 +486,63 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
          */
         @Override
         public void setElement(T element) throws IllegalArgumentException {
-
+            if (element == null) throw new IllegalArgumentException("The element of a Node cannot be null!");
+            this.element = element;
         }
 
         /**
+         * Gets the parent of the node this method is called on.
+         *
          * @return The parent node of this class. Can be null.
          */
         @Override
         public Node<T> getParent() {
-            return null;
+            return parent;
         }
 
+        /**
+         * Sets the parent of the node this method is called on.
+         *
+         * @param parent The node to be set as parent.
+         */
+        public void setParent(Node<T> parent) {
+            this.parent = parent;
+        }
+
+        /**
+         * Gets the left child of the node this method is called on.
+         *
+         * @return The left child node of this class. Can be null.
+         */
         public Node<T> getLeft() {
-            return null;
+            return left;
         }
 
+        /**
+         * Sets the left child of the node this method is called on.
+         *
+         * @param left The node to be set as left child.
+         */
+        public void setLeft(Node<T> left) {
+            this.left = left;
+        }
+
+        /**
+         * Gets the right child of the node this method is called on.
+         *
+         * @return The right child node of this class. Can be null.
+         */
         public Node<T> getRight() {
-            return null;
+            return right;
+        }
+
+        /**
+         * Sets the right child of the node this method is called on.
+         *
+         * @param right The node to be set as right child.
+         */
+        public void setRight(Node<T> right) {
+            this.right = right;
         }
     }
 }
