@@ -1,4 +1,4 @@
-# 3308 Campaign 03 -- Learning Tree Classification
+### 3308 Campaign 03 -- Learning Tree Classification
 
 ## Due Date: February 26, 2019 @ 2300
 
