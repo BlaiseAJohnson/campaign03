@@ -58,7 +58,13 @@ public abstract class DepthFirstTraversal<E> extends AbstractTraversal<E> {
         return nodeList;
     }
 
-
+    /**
+     * Method with traverses a subtree. Method alters a passed-in iterable
+     * so that it represents the traversal through the tree.
+     *
+     * @param parent
+     * @param snapshot
+     */
     public abstract void subtree(Node<E> parent, List<Node<E>> snapshot);
 
     /**
