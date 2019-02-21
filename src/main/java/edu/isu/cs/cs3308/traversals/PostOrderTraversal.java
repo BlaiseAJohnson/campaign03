@@ -18,8 +18,8 @@ public class PostOrderTraversal<E> extends DepthFirstTraversal<E> {
         if (parent == null || snapshot == null) throw new IllegalArgumentException();
         BinaryTreeNode<E> node = (BinaryTreeNode<E>) parent;
 
-        if (node.getLeft() != null) subtree(node, snapshot);
-        if (node.getRight() != null) subtree(node, snapshot);
+        if (node.getLeft() != null) subtree(node.getLeft(), snapshot);
+        if (node.getRight() != null) subtree(node.getRight(), snapshot);
 
         snapshot.add(node);
         if (command != null) command.execute(tree, node);
