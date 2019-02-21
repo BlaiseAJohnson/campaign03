@@ -1,11 +1,23 @@
-//TODO: ImplementBreadthFirstTraversal
-
 package edu.isu.cs.cs3308.traversals;
 
 import edu.isu.cs.cs3308.structures.Node;
+import edu.isu.cs.cs3308.structures.Tree;
+import edu.isu.cs.cs3308.structures.impl.LinkedBinaryTree.BinaryTreeNode;
+import edu.isu.cs.cs3308.structures.impl.LinkedQueue;
 import edu.isu.cs.cs3308.traversals.commands.TraversalCommand;
 
+import java.util.LinkedList;
+
 public class BreadthFirstTraversal<E> extends AbstractTraversal<E> {
+
+    protected Tree<E> tree;
+    protected TraversalCommand command = null;
+
+    public BreadthFirstTraversal(Tree<E> tree) throws IllegalArgumentException {
+        if (tree == null) throw new IllegalArgumentException();
+        this.tree = tree;
+    }
+
     /**
      * Method which initiates the traversal of a tree from the root node. This
      * method returns the an iterable container of nodes representing a
@@ -15,8 +27,8 @@ public class BreadthFirstTraversal<E> extends AbstractTraversal<E> {
      * tree.
      */
     @Override
-    public Iterable<Node<E>> traverse() {
-        return null;
+    public Iterable<Node<E>> traverse() throws IllegalArgumentException {
+        return traverseFrom(tree.root());
     }
 
     /**
@@ -29,8 +41,23 @@ public class BreadthFirstTraversal<E> extends AbstractTraversal<E> {
      * tree.
      */
     @Override
-    public Iterable<Node<E>> traverseFrom(Node<E> node) {
-        return null;
+    public Iterable<Node<E>> traverseFrom(Node<E> node) throws IllegalArgumentException {
+        if (node == null) throw new IllegalArgumentException();
+
+        BinaryTreeNode<E> fromNode = (BinaryTreeNode<E>) node;
+        LinkedQueue<Node<E>> queue = new LinkedQueue<>();
+        LinkedList<Node<E>> list = new LinkedList<>();
+
+        queue.offer(fromNode);
+
+        while (!queue.isEmpty()) {
+            fromNode = (BinaryTreeNode<E>) queue.poll();
+            list.add(fromNode);
+            if (fromNode.getLeft() != null) queue.offer(fromNode.getLeft());
+            if (fromNode.getRight() != null) queue.offer(fromNode.getRight());
+        }
+
+        return list;
     }
 
     /**

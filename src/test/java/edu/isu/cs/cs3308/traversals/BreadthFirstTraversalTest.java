@@ -1,10 +1,9 @@
-//TODO: Remove comments from BreadthFirstTraversalTest.
-
 package edu.isu.cs.cs3308.traversals;
 
 import edu.isu.cs.cs3308.structures.Node;
 import edu.isu.cs.cs3308.structures.Tree;
 import edu.isu.cs.cs3308.structures.impl.LinkedBinaryTree;
+import edu.isu.cs.cs3308.structures.impl.LinkedBinaryTree.BinaryTreeNode;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -47,7 +46,7 @@ public class BreadthFirstTraversalTest {
         tree.insert(6, two);
         tree.insert(7, two);
 
-        //fixture = new BreadthFirstTraversal<>(tree);
+        fixture = new BreadthFirstTraversal<>(tree);
     }
 
     @After
@@ -68,17 +67,17 @@ public class BreadthFirstTraversalTest {
         }
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testTraverse_2() {
         tree = new LinkedBinaryTree<>();
-        //fixture = new BreadthFirstTraversal(tree);
+        fixture = new BreadthFirstTraversal(tree);
         Iterable<Node<Integer>> trav = fixture.traverse();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testTraverse_3() {
         tree = null;
-        //fixture = new BreadthFirstTraversal(tree);
+        fixture = new BreadthFirstTraversal(tree);
     }
 
     /**
@@ -103,7 +102,7 @@ public class BreadthFirstTraversalTest {
     @Test(expected = IllegalArgumentException.class)
     public void testTraverseFrom_3() {
         tree.remove(left.getElement(), tree.root());
-        fixture.traverseFrom(left);
+        fixture.traverseFrom(((BinaryTreeNode)tree.root()).getLeft());
     }
 }
 

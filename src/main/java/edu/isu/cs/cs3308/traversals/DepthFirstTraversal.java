@@ -11,7 +11,7 @@ import java.util.List;
 
 public abstract class DepthFirstTraversal<E> extends AbstractTraversal<E> {
 
-    protected Tree<E> tree = null;
+    protected Tree<E> tree;
     protected TraversalCommand command = null;
 
     DepthFirstTraversal(Tree<E> tree) throws IllegalArgumentException {
