@@ -19,12 +19,7 @@ public class PreOrderTraversal<E> extends DepthFirstTraversal<E> {
         snapshot.add(node);
         if (command != null) command.execute(tree, node);
 
-        if (node.getLeft() != null) {
-            subtree(node.getLeft(), snapshot);
-        }
-
-        if (node.getRight() != null) {
-            subtree(node.getRight(), snapshot);
-        }
+        if (node.getLeft() != null) subtree(node.getLeft(), snapshot);
+        if (node.getRight() != null) subtree(node.getRight(), snapshot);
     }
 }

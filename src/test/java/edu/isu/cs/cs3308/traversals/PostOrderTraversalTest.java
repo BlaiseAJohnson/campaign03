@@ -1,5 +1,3 @@
-//TODO: Remove comments from PostOrderTraversalTest
-
 package edu.isu.cs.cs3308.traversals;
 
 import edu.isu.cs.cs3308.structures.Node;
@@ -49,7 +47,7 @@ public class PostOrderTraversalTest {
         tree.insert(4, two);
         tree.insert(5, two);
 
-        //fixture = new PostOrderTraversal<>(tree);
+        fixture = new PostOrderTraversal<>(tree);
     }
 
     @After
@@ -62,7 +60,7 @@ public class PostOrderTraversalTest {
     @Test
     public void testSubtree() {
         List<Node<Integer>> list = new ArrayList<>();
-        //fixture.subtree(left, list);
+        fixture.subtree(left, list);
         assertEquals("Subtree size incorrect", 3, list.size());
         int i = 1;
         for (Node<Integer> node : list) {
@@ -74,12 +72,12 @@ public class PostOrderTraversalTest {
     @Test(expected = IllegalArgumentException.class)
     public void testSubtree_2() {
         List<Node<Integer>> list = new ArrayList<>();
-        //fixture.subtree(null, list);
+        fixture.subtree(null, list);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testSubtree_3() {
-        //fixture.subtree(left, null);
+        fixture.subtree(left, null);
     }
 
     /**
@@ -98,7 +96,7 @@ public class PostOrderTraversalTest {
     @Test
     public void testTraverse_2() {
         tree = new LinkedBinaryTree<>();
-        //fixture = new PostOrderTraversal(tree);
+        fixture = new PostOrderTraversal(tree);
         Iterable<Node<Integer>> trav = fixture.traverse();
         for (Node<Integer> node : trav) {
             fail("Traveral should be empty");
@@ -108,7 +106,7 @@ public class PostOrderTraversalTest {
     @Test(expected = IllegalArgumentException.class)
     public void testTraverse_3() {
         tree = null;
-        //fixture = new PostOrderTraversal(tree);
+        fixture = new PostOrderTraversal(tree);
     }
 
     /**
@@ -116,19 +114,18 @@ public class PostOrderTraversalTest {
      */
     @Test
     public void testSubTreeTraversal() {
-        //Iterable<Node<Integer>> trav = fixture.subTreeTraverse(left);
+        Iterable<Node<Integer>> trav = fixture.subTreeTraverse(left);
         int i = 1;
 
-        /*
+
         for (Node<Integer> node : trav) {
             assertEquals("PostOrder traversal of sublist incorrect", new Integer(i), node.getElement());
             i++;
         }
-        */
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testSubTreeTraversal_2() {
-        //Iterable<Node<Integer>> trav = fixture.subTreeTraverse(null);
+        Iterable<Node<Integer>> trav = fixture.subTreeTraverse(null);
     }
 }

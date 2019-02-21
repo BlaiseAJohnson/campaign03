@@ -1,5 +1,3 @@
-//TODO: Implement InOrderTraversal
-
 package edu.isu.cs.cs3308.traversals;
 
 import edu.isu.cs.cs3308.structures.Node;
@@ -19,15 +17,11 @@ public class InOrderTraversal<E> extends DepthFirstTraversal<E> {
         if (parent == null || snapshot == null) throw new IllegalArgumentException();
         BinaryTreeNode<E> node = (BinaryTreeNode<E>) parent;
 
-        if (node.getLeft() != null) {
-            subtree(node.getLeft(), snapshot);
-        }
+        if (node.getLeft() != null) subtree(node.getLeft(), snapshot);
 
         snapshot.add(node);
         if (command != null) command.execute(tree, node);
 
-        if (node.getRight() != null) {
-            subtree(node.getRight(), snapshot);
-        }
+        if (node.getRight() != null) subtree(node.getRight(), snapshot);
     }
 }
