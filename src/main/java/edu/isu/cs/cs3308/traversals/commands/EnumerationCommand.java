@@ -5,7 +5,7 @@ import edu.isu.cs.cs3308.structures.Tree;
 import edu.isu.cs.cs3308.Datum;
 
 /**
- * A Traversal Command which traveses a tree of Datum objects and sets their number to the number in which they were visited.
+ * A Traversal Command which traverses a tree of Datum objects and sets their number to the number in which they were visited.
  * @author Isaac Griffith
  */
 public class EnumerationCommand extends TraversalCommand<Datum> {

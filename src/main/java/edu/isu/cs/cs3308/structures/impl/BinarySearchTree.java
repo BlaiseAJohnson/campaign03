@@ -1,5 +1,3 @@
-//TODO: Implement BinarySearchTree
-
 package edu.isu.cs.cs3308.structures.impl;
 
 import edu.isu.cs.cs3308.structures.BinaryTree;

@@ -1,5 +1,3 @@
-//TODO:Implement DepthFirstTraversal
-
 package edu.isu.cs.cs3308.traversals;
 
 import edu.isu.cs.cs3308.structures.Node;
