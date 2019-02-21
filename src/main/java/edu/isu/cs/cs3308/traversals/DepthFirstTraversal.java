@@ -11,7 +11,13 @@ import java.util.List;
 
 public abstract class DepthFirstTraversal<E> extends AbstractTraversal<E> {
 
-    private Tree<E> tree;
+    protected Tree<E> tree;
+    protected TraversalCommand command;
+
+    DepthFirstTraversal(Tree<E> tree) {
+        this.tree = tree;
+    }
+
     /**
      * Method which initiates the traversal of a tree from its root node. This
      * Method returns the an iterable container of nodes representing a
@@ -62,10 +68,10 @@ public abstract class DepthFirstTraversal<E> extends AbstractTraversal<E> {
      * Method with traverses a subtree. Method alters a passed-in iterable
      * so that it represents the traversal through the tree.
      *
-     * @param parent
-     * @param snapshot
+     * @param root The root of the subtree to be traversed.
+     * @param snapshot An iterable to be altered to represent the traversal.
      */
-    public abstract void subtree(Node<E> parent, List<Node<E>> snapshot);
+    public abstract void subtree(Node<E> root, List<Node<E>> snapshot);
 
     /**
      * Sets the executable command to the provided value.
@@ -73,5 +79,7 @@ public abstract class DepthFirstTraversal<E> extends AbstractTraversal<E> {
      * @param cmd The new executable command
      */
     @Override
-    public abstract void setCommand(TraversalCommand cmd);
+    public void setCommand(TraversalCommand cmd) {
+        command = cmd;
+    }
 }

@@ -8,7 +8,7 @@ import java.util.LinkedList;
 public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
 
     public Node<E> root = null;
-    public int size = 0;
+    private int size = 0;
 
     /**
      * Returns the left child of the provided node.
@@ -51,7 +51,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
     @Override
     public Node<E> sibling(Node<E> p) throws IllegalArgumentException {
         BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
-        BinaryTreeNode<E> parent = (BinaryTreeNode<E>) node.parent;
+        BinaryTreeNode<E> parent = node.parent;
 
         if (parent.left == node) {
             return parent.right;
@@ -73,7 +73,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
     @Override
     public Node<E> addLeft(Node<E> p, E element) throws IllegalArgumentException {
         BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
-        BinaryTreeNode<E> newNode = createNode(element, p, null, null);
+        BinaryTreeNode<E> newNode = createNode(element, node, null, null);
 
         if (node.left != null) throw new IllegalArgumentException("This node already has a left child!");
         node.left = newNode;
@@ -96,7 +96,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
     @Override
     public Node<E> addRight(Node<E> p, E element) throws IllegalArgumentException {
         BinaryTreeNode<E> node = (BinaryTreeNode<E>) validate(p);
-        BinaryTreeNode<E> newNode = createNode(element, p, null, null);
+        BinaryTreeNode<E> newNode = createNode(element, node, null, null);
 
         if (node.right != null) throw new IllegalArgumentException("This node already has a right child!");
         node.right = newNode;
@@ -284,7 +284,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
             E leftItem = node.getLeft().getElement();
 
             if (leftItem.equals(item)) {
-                BinaryTreeNode<E> removeNode = (BinaryTreeNode<E>) node.getLeft();
+                BinaryTreeNode<E> removeNode = node.getLeft();
                 removeNode.setParent(removeNode);
                 node.setLeft(null);
                 size--;
@@ -296,7 +296,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
             E rightItem = node.getRight().getElement();
 
             if (rightItem.equals(item)) {
-                BinaryTreeNode<E> removeNode = (BinaryTreeNode<E>) node.getRight();
+                BinaryTreeNode<E> removeNode = node.getRight();
                 removeNode.setParent(removeNode);
                 node.setRight(null);
                 size--;
@@ -387,8 +387,8 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
     @Override
     public int subTreeSize(Node<E> node) throws IllegalArgumentException {
         BinaryTreeNode<E> vNode = (BinaryTreeNode<E>) validate(node);
-        BinaryTreeNode<E> left = (BinaryTreeNode<E>) vNode.getLeft();
-        BinaryTreeNode<E> right = (BinaryTreeNode<E>) vNode.getRight();
+        BinaryTreeNode<E> left = vNode.getLeft();
+        BinaryTreeNode<E> right = vNode.getRight();
         int leftSize = 0;
         int rightSize = 0;
 
@@ -423,7 +423,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      * @param right The right child of the newly created node.
      * @return The newly created node unless element was null.
      */
-    BinaryTreeNode<E> createNode(E element, Node<E> parent, Node<E> left, Node<E> right) throws IllegalArgumentException {
+    BinaryTreeNode<E> createNode(E element, BinaryTreeNode<E> parent, BinaryTreeNode<E> left, BinaryTreeNode<E> right) throws IllegalArgumentException {
         if (element == null) throw new IllegalArgumentException("Element cannot take null values.");
         return new BinaryTreeNode<>(element, parent, left, right);
     }
@@ -458,12 +458,12 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      */
     public static class BinaryTreeNode<T> implements Node<T> {
         private T element;
-        private Node<T> parent;
-        private Node<T> left;
-        private Node<T> right;
+        private BinaryTreeNode<T> parent;
+        private BinaryTreeNode<T> left;
+        private BinaryTreeNode<T> right;
 
 
-        public BinaryTreeNode(T element, Node<T> parent, Node<T> left, Node<T> right) {
+        BinaryTreeNode(T element, BinaryTreeNode<T> parent, BinaryTreeNode<T> left, BinaryTreeNode<T> right) {
             this.element = element;
             this.parent = parent;
             this.left = left;
@@ -496,7 +496,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
          * @return The parent node of this class. Can be null.
          */
         @Override
-        public Node<T> getParent() {
+        public BinaryTreeNode<T> getParent() {
             return parent;
         }
 
@@ -505,7 +505,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
          *
          * @param parent The node to be set as parent.
          */
-        public void setParent(Node<T> parent) {
+        public void setParent(BinaryTreeNode<T> parent) {
             this.parent = parent;
         }
 
@@ -514,7 +514,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
          *
          * @return The left child node of this class. Can be null.
          */
-        public Node<T> getLeft() {
+        BinaryTreeNode<T> getLeft() {
             return left;
         }
 
@@ -523,7 +523,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
          *
          * @param left The node to be set as left child.
          */
-        public void setLeft(Node<T> left) {
+        void setLeft(BinaryTreeNode<T> left) {
             this.left = left;
         }
 
@@ -532,7 +532,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
          *
          * @return The right child node of this class. Can be null.
          */
-        public Node<T> getRight() {
+        BinaryTreeNode<T> getRight() {
             return right;
         }
 
@@ -541,7 +541,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
          *
          * @param right The node to be set as right child.
          */
-        public void setRight(Node<T> right) {
+        void setRight(BinaryTreeNode<T> right) {
             this.right = right;
         }
     }
