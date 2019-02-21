@@ -514,7 +514,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
          *
          * @return The left child node of this class. Can be null.
          */
-        BinaryTreeNode<T> getLeft() {
+        public BinaryTreeNode<T> getLeft() {
             return left;
         }
 
@@ -523,7 +523,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
          *
          * @param left The node to be set as left child.
          */
-        void setLeft(BinaryTreeNode<T> left) {
+        public void setLeft(BinaryTreeNode<T> left) {
             this.left = left;
         }
 
@@ -532,7 +532,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
          *
          * @return The right child node of this class. Can be null.
          */
-        BinaryTreeNode<T> getRight() {
+        public BinaryTreeNode<T> getRight() {
             return right;
         }
 
@@ -541,7 +541,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
          *
          * @param right The node to be set as right child.
          */
-        void setRight(BinaryTreeNode<T> right) {
+        public void setRight(BinaryTreeNode<T> right) {
             this.right = right;
         }
     }
