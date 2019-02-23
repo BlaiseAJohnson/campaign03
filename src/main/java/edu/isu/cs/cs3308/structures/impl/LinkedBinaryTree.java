@@ -421,7 +421,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
      * @param right The right child of the newly created node.
      * @return The newly created node unless element was null.
      */
-    BinaryTreeNode<E> createNode(E element, BinaryTreeNode<E> parent, BinaryTreeNode<E> left, BinaryTreeNode<E> right) throws IllegalArgumentException {
+    public BinaryTreeNode<E> createNode(E element, BinaryTreeNode<E> parent, BinaryTreeNode<E> left, BinaryTreeNode<E> right) throws IllegalArgumentException {
         if (element == null) throw new IllegalArgumentException("Element cannot take null values.");
         return new BinaryTreeNode<>(element, parent, left, right);
     }
@@ -461,7 +461,7 @@ public class LinkedBinaryTree<E> extends BinarySearchTree<E> {
         private BinaryTreeNode<T> right;
 
 
-        BinaryTreeNode(T element, BinaryTreeNode<T> parent, BinaryTreeNode<T> left, BinaryTreeNode<T> right) {
+        public BinaryTreeNode(T element, BinaryTreeNode<T> parent, BinaryTreeNode<T> left, BinaryTreeNode<T> right) {
             this.element = element;
             this.parent = parent;
             this.left = left;

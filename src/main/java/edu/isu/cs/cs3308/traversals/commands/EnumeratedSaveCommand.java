@@ -43,7 +43,6 @@ public class EnumeratedSaveCommand extends TraversalCommand<Datum> {
         String side = "r";
         if (node.getParent() != null)
             side = node.equals(((BinaryTree<Datum>) tree).left(node.getParent())) ? "l" : "r";
-        writer.printf("%d:%d:%s:%s%n", parentNum, data.getNumber(), side, data.getPrompt());
+        writer.printf("%d:%d:%s:%s\n", parentNum, data.getNumber(), side, data.getPrompt());
     }
-
 }
