@@ -52,6 +52,7 @@ public class BreadthFirstTraversal<E> extends AbstractTraversal<E> {
 
         while (!queue.isEmpty()) {
             fromNode = (BinaryTreeNode<E>) queue.poll();
+            if (command != null) command.execute(tree, fromNode);
             list.add(fromNode);
             if (fromNode.getLeft() != null) queue.offer(fromNode.getLeft());
             if (fromNode.getRight() != null) queue.offer(fromNode.getRight());
@@ -67,6 +68,6 @@ public class BreadthFirstTraversal<E> extends AbstractTraversal<E> {
      */
     @Override
     public void setCommand(TraversalCommand cmd) {
-
+        command = cmd;
     }
 }

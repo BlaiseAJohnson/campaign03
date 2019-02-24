@@ -8,6 +8,7 @@ import edu.isu.cs.cs3308.structures.impl.BinarySearchTree;
 import edu.isu.cs.cs3308.structures.impl.LinkedBinaryTree;
 import edu.isu.cs.cs3308.structures.impl.LinkedBinaryTree.BinaryTreeNode;
 import edu.isu.cs.cs3308.traversals.*;
+import edu.isu.cs.cs3308.traversals.commands.EnumeratedLoadCommand;
 import edu.isu.cs.cs3308.traversals.commands.EnumeratedSaveCommand;
 import edu.isu.cs.cs3308.traversals.commands.EnumerationCommand;
 
@@ -82,7 +83,8 @@ public class ClassificationTree {
      * operations, a hardcoded basic tree will be loaded instead.
      */
     public void load() {
-        BufferedReader reader = null;
+        // Prompt for file
+        BufferedReader reader;
         Scanner scanner = new Scanner(System.in);
         String line;
 
@@ -90,17 +92,25 @@ public class ClassificationTree {
         String file = scanner.next();
 
         try {
+            // Extract nodeList from file
             reader = new BufferedReader(new FileReader(file));
             line = reader.readLine();
             LinkedList<String> nodeList = new LinkedList<>();
-            BinarySearchTree<Datum> tree = new LinkedBinaryTree<>();
 
             while (line != null) {
                 nodeList.add(line);
                 line = reader.readLine();
             }
 
-            loadTree(tree, nodeList);
+            // Create tree dynamically while traversing.
+            LinkedBinaryTree<Datum> tree = new LinkedBinaryTree<>();
+            BreadthFirstTraversal<Datum> traversal = new BreadthFirstTraversal<>(tree);
+            EnumeratedLoadCommand command = new EnumeratedLoadCommand(nodeList);
+            tree.setRoot(new Datum(""));
+            traversal.setCommand(command);
+            traversal.traverse();
+
+            this.tree = tree;
             reader.close();
         } catch (FileNotFoundException e) {
             System.out.println("File could not be found. An empty tree will be loaded instead.");
@@ -114,14 +124,6 @@ public class ClassificationTree {
     }
 
     private void loadDefaultTree() {
-        tree.setRoot(null);
-    }
-
-    private void loadTree(BinarySearchTree<Datum> tree, List<String> nodeList) {
-        for (String node: nodeList) {
-            String[] nodeCode = node.split(":");
-
-
-        }
+        tree.setRoot(new Datum(""));
     }
 }
