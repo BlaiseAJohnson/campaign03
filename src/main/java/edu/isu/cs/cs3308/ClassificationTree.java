@@ -2,9 +2,6 @@
 
 package edu.isu.cs.cs3308;
 
-import edu.isu.cs.cs3308.structures.BinaryTree;
-import edu.isu.cs.cs3308.structures.Node;
-import edu.isu.cs.cs3308.structures.impl.BinarySearchTree;
 import edu.isu.cs.cs3308.structures.impl.LinkedBinaryTree;
 import edu.isu.cs.cs3308.structures.impl.LinkedBinaryTree.BinaryTreeNode;
 import edu.isu.cs.cs3308.traversals.*;
@@ -13,16 +10,7 @@ import edu.isu.cs.cs3308.traversals.commands.EnumeratedSaveCommand;
 import edu.isu.cs.cs3308.traversals.commands.EnumerationCommand;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
 import java.util.Scanner;
 
 /**
@@ -48,7 +36,83 @@ public class ClassificationTree {
      * Main method which controls the identification and tree management loop.
      */
     public void identify() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        BinaryTreeNode<Datum> currentNode = (BinaryTreeNode<Datum>) tree.root;
+        LinkedList<String> adjectives = new LinkedList<>();
+        String answer;
+
+        if (currentNode.getElement().getPrompt().equals("NONE")) {
+            identifyFirstAnimal();
+            return;
+        }
+
+        while (true) {
+            System.out.println("Is this animal " + currentNode.getElement().getPrompt() + "? (y/n) > ");
+            Scanner scanner = new Scanner(System.in);
+            answer = scanner.next().toLowerCase();
+
+            if (answer.equals("y")) {
+                if (currentNode.getLeft() != null) {
+                    adjectives.add(currentNode.getElement().getPrompt());
+                    currentNode = currentNode.getLeft();
+                }
+                else break;
+            }
+            else if (answer.equals("n")) {
+                if (currentNode.getRight() != null) {
+                    adjectives.add("not " + currentNode.getElement().getPrompt());
+                    currentNode = currentNode.getRight();
+                }
+                else break;
+            }
+            else {
+                System.out.println("I didn't understand your response!");
+            }
+        }
+
+        if (answer.equals("y")) {
+            System.out.println("Good.");
+        }
+        else if (answer.equals("n")) {
+            addNewAnimal(currentNode, adjectives);
+        }
+        else {
+            System.out.println("Please try again.");
+        }
+    }
+
+    private void identifyFirstAnimal() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("I don't know any animals!");
+        System.out.println("What is the new animal? > ");
+        String newAnimal = scanner.next().toLowerCase();
+
+        System.out.println("What characteristic sets it apart?");
+        String newCharacteristic = scanner.next().toLowerCase();
+
+        tree.root.setElement(new Datum(newCharacteristic));
+        tree.addLeft(tree.root, new Datum("a " + newAnimal));
+    }
+
+    private void addNewAnimal(BinaryTreeNode<Datum> node, LinkedList<String> adjectives) {
+        Scanner scanner = new Scanner(System.in);
+        Datum nodeDatum = node.getElement();
+        String nodeAnimal = nodeDatum.getPrompt();
+
+        System.out.print("I don't know any ");
+        for (String adjective: adjectives) {
+            System.out.print(adjective + " ");
+        }
+        System.out.print("animals that aren't " + nodeAnimal + "\n");
+
+        System.out.println("What is the new animal? > ");
+        String newAnimal = scanner.next().toLowerCase();
+
+        System.out.println("What characteristic does a " + newAnimal + " have that " + nodeAnimal + " doesn't have?");
+        String newCharacteristic = scanner.next();
+
+        tree.set(node, new Datum(newCharacteristic));
+        tree.addLeft(node, new Datum(newAnimal));
+        tree.addRight(node, nodeDatum);
     }
 
     /**
@@ -114,16 +178,16 @@ public class ClassificationTree {
             reader.close();
         } catch (FileNotFoundException e) {
             System.out.println("File could not be found. An empty tree will be loaded instead.");
-            loadDefaultTree();
+            loadEmptyTree();
             e.printStackTrace();
         } catch (IOException e) {
             System.out.println("File could not be read. An empty tree will be loaded instead.");
-            loadDefaultTree();
+            loadEmptyTree();
             e.printStackTrace();
         }
     }
 
-    private void loadDefaultTree() {
-        tree.setRoot(new Datum(""));
+    private void loadEmptyTree() {
+        tree.setRoot(new Datum("NONE"));
     }
 }
