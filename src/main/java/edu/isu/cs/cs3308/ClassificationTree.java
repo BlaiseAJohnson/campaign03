@@ -107,12 +107,18 @@ public class ClassificationTree {
         System.out.println("What is the new animal? > ");
         String newAnimal = scanner.next().toLowerCase();
 
-        System.out.println("What characteristic does a " + newAnimal + " have that " + nodeAnimal + " doesn't have?");
+        System.out.println("What characteristic sets it apart?");
         String newCharacteristic = scanner.next();
 
-        tree.set(node, new Datum(newCharacteristic));
-        tree.addLeft(node, new Datum(newAnimal));
-        tree.addRight(node, nodeDatum);
+        if (node.getLeft() == null) {
+            tree.set(node, new Datum(newCharacteristic));
+            tree.addLeft(node, new Datum(newAnimal));
+            tree.addRight(node, nodeDatum);
+        }
+        else {
+            tree.addRight(node, new Datum(newCharacteristic));
+            tree.addLeft(node.getRight(), new Datum(newAnimal));
+        }
     }
 
     /**
@@ -125,16 +131,19 @@ public class ClassificationTree {
         traversal.traverse();
 
         // Open a file stream.
-        FileOutputStream in;
+        File in;
+        PrintWriter writer;
         Scanner userIn = new Scanner(System.in);
         System.out.println("Please specify a file to save to: >");
         String file = userIn.next();
 
         try {
             // Travel through the tree again to save it.
-            in = new FileOutputStream(file);
-            traversal.setCommand(new EnumeratedSaveCommand(new PrintWriter(in)));
+            in = new File(file);
+            writer = new PrintWriter(in);
+            traversal.setCommand(new EnumeratedSaveCommand(writer));
             traversal.traverse();
+            writer.close();
         } catch (IllegalArgumentException e) {
             System.out.println("Something went wrong! The tree could not be saved.");
         } catch (FileNotFoundException e) {
@@ -179,11 +188,9 @@ public class ClassificationTree {
         } catch (FileNotFoundException e) {
             System.out.println("File could not be found. An empty tree will be loaded instead.");
             loadEmptyTree();
-            e.printStackTrace();
         } catch (IOException e) {
             System.out.println("File could not be read. An empty tree will be loaded instead.");
             loadEmptyTree();
-            e.printStackTrace();
         }
     }
 

@@ -32,7 +32,6 @@ public class EnumeratedLoadCommand extends TraversalCommand<Datum> {
 
                 if (parent == -1) {
                     node.setElement(new Datum(prompt, selfNum));
-                    nodeList.remove(searchNode);
                 }
             }
         }
@@ -49,11 +48,9 @@ public class EnumeratedLoadCommand extends TraversalCommand<Datum> {
             if (parent == nodeNumber) {
                 if (position.equals("l")) {
                     ((LinkedBinaryTree<Datum>)tree).addLeft(node, new Datum(prompt, selfNum));
-                    nodeList.remove(searchNode);
                 }
                 if (position.equals("r")) {
                     ((LinkedBinaryTree<Datum>)tree).addRight(node, new Datum(prompt, selfNum));
-                    nodeList.remove(searchNode);
                 }
             }
         }
